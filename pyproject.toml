@@ -46,3 +46,7 @@ extend-select = ["I"]  # Add import sorting
 known-first-party = ["coursedata_0120_1268"]
 force-sort-within-sections = true
 
+[tool.coursedata]
+course_name = "Discrete Mathematics"
+term_name = "Fall 2026"
+

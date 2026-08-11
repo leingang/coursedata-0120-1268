@@ -1,0 +1,48 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "coursedata_0120_1268"
+version = "0.0.1"
+description = "Course data for MATH-UA 120 Discrete Mathematics (Section 016), Fall 2026"
+authors = [
+  { name = "Matthew Leingang" },
+]
+
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    
+]
+dependencies = [
+    "ipython",
+    "jupyterlab",
+    "loguru",
+    "matplotlib",
+    "mkdocs",
+    "notebook",
+    "numpy",
+    "pandas",
+    "pip",
+    "python-dotenv",
+    "ruff",
+    "scikit-learn",
+    "tqdm",
+    "typer",
+]
+requires-python = "~=3.13.0"
+
+
+[tool.ruff]
+line-length = 99
+src = ["coursedata_0120_1268"]
+include = ["pyproject.toml", "coursedata_0120_1268/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["coursedata_0120_1268"]
+force-sort-within-sections = true
+

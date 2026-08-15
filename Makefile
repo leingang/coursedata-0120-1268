@@ -5,6 +5,11 @@
 PROJECT_NAME = coursedata-0120-1268
 PYTHON_VERSION = 3.13
 PYTHON_INTERPRETER = python
+RSYNC = rsync -avz --exclude=".*"
+GIT = git
+DATA_DIR=data
+REPORTS_DIR=reports
+SYNC_DIR = /Users/matthew/Library/CloudStorage/GoogleDrive-mpl5@nyu.edu/My Drive/Courses/MATH-UA 120 Discrete Mathematics/MATH-UA 120 Fall 2026
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -62,6 +67,17 @@ create_environment:
 .PHONY: data
 data: requirements
 	$(PYTHON_INTERPRETER) coursedata_0120_1268/dataset.py
+
+
+## Make "daily" datasets
+## Assumes the requirements are up-to-date
+.PHONY: daily
+daily:
+	$(PYTHON_INTERPRETER) -m coursedata.dataset daily
+	$(GIT) add $(REPORTS_DIR)/enrollment
+	$(GIT) commit -am "Update enrollment reports"
+	$(PYTHON_INTERPRETER) -m coursedata.tasks daily	
+
 
 
 #################################################################################

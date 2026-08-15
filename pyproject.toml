@@ -50,3 +50,76 @@ force-sort-within-sections = true
 course_name = "Discrete Mathematics"
 term_name = "Fall 2026"
 
+# course ID's of all Brightspace sites (six-digit number, quoted as a string)
+[tool.coursedata.brightspace]
+courses = ["609453"]
+
+# course ID's of all Brightspace sites (seven-digit number, quoted as a string)
+# keep in increasing order of section number
+[tool.coursedata.gradescope]
+courses = ["1352536"]
+
+# course ID's of all EdSTEM sites (five-digit number, quoted as a string)
+[tool.coursedata.edstem]
+courses= ["101563"]
+
+[tool.coursedata.drive]
+# Optional paths for OAuth installed-app flow. If unset, the downloader first
+# tries application default credentials.
+# Defaults (when unset) use platformdirs config storage:
+#   - token_path:         ~/Library/Application Support/coursedata/google-drive-token.json
+#   - client_secret_path: ~/Library/Application Support/coursedata/google-client-secret.json
+# client_secret_path = "/absolute/path/to/google-client-secret.json"
+# token_path = "/absolute/path/to/google-drive-token.json"
+# Example configuration:
+# resources = [
+#   { name="mpl5-office-hours", id="1zpgmXEDt8r-BbXO7wDqqNQ-zgY_vuLiu9TjIaxSlI00", format="zip" }
+#   { name = "lecture-notes", id = "GOOGLE_DOC_FILE_ID", format = "zip", output = "drive/docs" },
+#   { name = "section-roster", id = "GOOGLE_SHEET_FILE_ID", format = "csv", output = "drive/spreadsheets" },
+# ]
+resources = [
+  { name = "mpl5-office-hours", id = "10e9XibzykHScumvvwlxMJhe1uDNtlYFJu1V_-Z-NkUc", format = "zip" }
+]
+
+[tool.coursedata.sections_dashboard]
+title = "Sections Dashboard"
+# Relative paths resolve from data/raw for input and data/processed or reports for outputs.
+input_path = "albert/class_details"
+# Relative to repo root; used by report sections to publish latest/snapshot HTML for Pages.
+docs_publish_dir = "docs/docs/sections"
+
+[tool.coursedata.sections_dashboard.field_map]
+# Override these key candidates if Albert output changes shape.
+section = ["section"]
+section_type = ["class_type"]
+instructor = ["instructor"]
+location = ["location"]
+meeting_times = ["days_and_times"]
+status = ["status", "class_status"]
+capacity = ["class_capacity"]
+enrolled = ["enrollment_total"]
+waitlist_count = ["wait_list_total"]
+waitlist_capacity = ["wait_list_capacity"]
+
+[tool.coursedata.daily]
+# Configure which steps run for `python -m coursedata.dataset daily`
+dataset = [
+  "get.albert",
+#  "get.brightspace",
+#  "get.drive",
+  "get.gradescope",
+#  "get.edstem",
+  "process.enrollment",
+  "process.gmail-filters",
+#  "process.engagement",
+#  "process.midterm-progress",
+  "process.sections",
+  "report.enrollment",
+#  "report.engagement",
+  "report.sections",
+]
+
+# Configure which steps run for `python -m coursedata.tasks daily`
+tasks = [
+  "sync-gradescope-rosters",
+]

@@ -50,6 +50,17 @@ force-sort-within-sections = true
 course_name = "Discrete Mathematics"
 term_name = "Fall 2026"
 
+[tool.coursedata.albert]
+# course ID's of all sections (five-digit number, quoted as a string)
+courses=["10433","10434","10435","10435","10437"]
+# Albert term code
+# 1 - ???
+# YY - last two digits of calendar year
+# N - academic term (4 - spring, 8 - fall)
+term="1268"
+subject = "MATH-UA"
+catalog_number = "120"
+
 # course ID's of all Brightspace sites (six-digit number, quoted as a string)
 [tool.coursedata.brightspace]
 courses = ["609453"]

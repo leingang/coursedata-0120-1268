@@ -4,7 +4,7 @@
 
 PROJECT_NAME = coursedata-0120-1268
 PYTHON_VERSION = 3.13
-PYTHON_INTERPRETER = python
+PYTHON_INTERPRETER = uv run python
 RSYNC = rsync -avz --exclude=".*"
 GIT = git
 DATA_DIR=data

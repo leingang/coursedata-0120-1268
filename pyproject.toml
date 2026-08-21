@@ -52,7 +52,7 @@ term_name = "Fall 2026"
 
 [tool.coursedata.albert]
 # course ID's of all sections (five-digit number, quoted as a string)
-courses=["10433","10434","10435","10435","10437"]
+courses=["10433","10434","10435","10437","10438"]
 # Albert term number
 # 1 - ???
 # YY - last two digits of calendar year

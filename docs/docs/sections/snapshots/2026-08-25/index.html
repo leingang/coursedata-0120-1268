@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"> 
+<head>
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <title>Sections Dashboard</title>
+  <style>
+    :root {
+            --bg: #f2f2f2;
+            --ink: #330662;
+            --accent: #57068c;
+            --accent-dark: #330662;
+            --panel: #ffffff;
+            --line: #b8b8b8;
+            --header: #eee6f3;
+    }
+        body { margin: 0; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--ink); }
+        header { padding: 24px; background: linear-gradient(120deg, var(--accent), var(--accent-dark)); color: #ffffff; border-bottom: 1px solid var(--accent-dark); }
+        h1 { margin: 0 0 6px; letter-spacing: 0.01em; }
+        main { padding: 20px; max-width: 1200px; margin: 0 auto; }
+    .controls { margin-bottom: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
+        input { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; min-width: 240px; background: var(--panel); color: var(--ink); }
+        input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+        table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); box-shadow: 0 10px 28px rgba(51, 6, 98, 0.10); }
+    th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+        th { background: var(--header); color: var(--accent-dark); position: sticky; top: 0; }
+        tbody tr:nth-child(even) { background: #faf8fc; }
+        tbody tr:hover { background: #f3ecf8; }
+        .meta { font-size: 0.9rem; color: #f2eefe; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sections Dashboard</h1>
+    <p class="meta">Generated 2026-08-25 07:15</p>
+  </header>
+  <main>
+    <div class="controls">
+      <input id="q" type="search" placeholder="Filter by section, instructor, location...">
+    </div>
+    <table>
+      <thead>
+        <tr>
+                    <th>Section</th><th>Type</th><th>Instructor</th><th>Location</th><th>Meeting Times</th>
+                    <th>Capacity</th><th>Enrolled</th><th>Waitlist</th><th>Waitlist Cap</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </main>
+  <script>
+    const rows = [{"section":"016","section_type":"Lecture","instructor":"To be Announced","location":"251 Mercer St (Warren Weaver) Room 517 Loc: Washington Square","meeting_times":"TuTh 2:00PM-3:15PM","capacity":30,"enrolled":30,"waitlist_count":1,"waitlist_capacity":5,"status":"Wait List","snapshot_date":"2026-08-25"},{"section":"017","section_type":"Recitation","instructor":"To be Announced","location":"251 Mercer St (Warren Weaver) Room 517 Loc: Washington Square","meeting_times":"Fr 11:00AM-12:15PM","capacity":30,"enrolled":30,"waitlist_count":2,"waitlist_capacity":5,"status":"Wait List","snapshot_date":"2026-08-25"},{"section":"018","section_type":"Recitation","instructor":"To be Announced","location":"70 Washington Sq S (Bobst) Room LL150 Loc: Washington Square","meeting_times":"Fr 9:30AM-10:45AM","capacity":30,"enrolled":30,"waitlist_count":3,"waitlist_capacity":5,"status":"Wait List","snapshot_date":"2026-08-25"},{"section":"019","section_type":"Recitation","instructor":"To be Announced","location":"7 East 12th St Room LL23 Loc: Washington Square","meeting_times":"Fr 2:00PM-3:15PM","capacity":30,"enrolled":30,"waitlist_count":2,"waitlist_capacity":5,"status":"Wait List","snapshot_date":"2026-08-25"}];
+    const tbody = document.getElementById('rows');
+    const search = document.getElementById('q');
+
+    function render(items) {
+      tbody.innerHTML = items.map(r => `
+        <tr>
+          <td>${r.section ?? ''}</td>
+                    <td>${r.section_type ?? ''}</td>
+                    <td>${r.instructor ?? ''}</td>
+          <td>${r.location ?? ''}</td>
+          <td>${r.meeting_times ?? ''}</td>
+          <td>${r.capacity ?? ''}</td>
+          <td>${r.enrolled ?? ''}</td>
+                    <td>${r.waitlist_count ?? ''}</td>
+                    <td>${r.waitlist_capacity ?? ''}</td>
+          <td>${r.status ?? ''}</td>
+        </tr>
+      `).join('');
+    }
+
+    search.addEventListener('input', () => {
+      const q = search.value.toLowerCase().trim();
+      if (!q) { render(rows); return; }
+      render(rows.filter(r =>
+        String(r.section ?? '').toLowerCase().includes(q) ||
+                String(r.section_type ?? '').toLowerCase().includes(q) ||
+                String(r.instructor ?? '').toLowerCase().includes(q) ||
+        String(r.location ?? '').toLowerCase().includes(q) ||
+        String(r.meeting_times ?? '').toLowerCase().includes(q)
+      ));
+    });
+
+    render(rows);
+  </script>
+</body>
+</html>

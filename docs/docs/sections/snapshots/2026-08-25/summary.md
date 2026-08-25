@@ -3,11 +3,11 @@
 Snapshot: 2026-08-25
 
 ## Totals
-- Sections: 4
-- Capacity: 120
-- Lecture Enrolled: 30
-- Waitlist: 8
-- Waitlist Capacity: 20
+- Sections: 5
+- Capacity: 240
+- Lecture Enrolled: 120
+- Waitlist: 16
+- Waitlist Capacity: 40
 
 ## Artifacts
 - Dashboard HTML: /Users/matthew/Library/CloudStorage/Box-Box/github/coursedata-0120-1268/reports/sections/2026-08-25/index.html

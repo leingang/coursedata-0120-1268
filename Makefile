@@ -9,6 +9,7 @@ RSYNC = rsync -avz --exclude=".*"
 GIT = git
 DATA_DIR=data
 REPORTS_DIR=reports
+DOCS_DIR=docs/docs
 SYNC_DIR = /Users/matthew/Library/CloudStorage/GoogleDrive-mpl5@nyu.edu/My Drive/Courses/MATH-UA 120 Discrete Mathematics/MATH-UA 120 Fall 2026
 
 #################################################################################
@@ -74,7 +75,7 @@ data: requirements
 .PHONY: daily
 daily:
 	$(PYTHON_INTERPRETER) -m coursedata.dataset daily
-	$(GIT) add $(REPORTS_DIR)/enrollment
+	$(GIT) add $(REPORTS_DIR) $(DOCS_DIR)
 	$(GIT) commit -am "Update enrollment reports"
 	$(PYTHON_INTERPRETER) -m coursedata.tasks daily	
 

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed *)"
+    ],
+    "additionalDirectories": [
+      "/Users/matthew/Library/CloudStorage/Box-Box/github/coursedata-0120-1268"
+    ]
+  }
+}

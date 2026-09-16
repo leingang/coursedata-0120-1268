@@ -16,6 +16,7 @@ classifiers = [
     
 ]
 dependencies = [
+    "coursedata",
     "ipython",
     "jupyterlab",
     "loguru",
@@ -32,6 +33,18 @@ dependencies = [
     "typer",
 ]
 requires-python = "~=3.13.0"
+
+[tool.uv.workspace]
+# "generic" is the actual course-data package (imported as `coursedata`),
+# checked out here as a git submodule from the shared ccds-coursedata
+# template repo. Declaring it as a workspace member (rather than a manual
+# `uv pip install -e generic`) means `uv sync` at the repo root always
+# reinstalls it and its dependencies (including python-edubag) instead of
+# silently stripping an untracked editable install.
+members = ["generic"]
+
+[tool.uv.sources]
+coursedata = { workspace = true }
 
 
 [tool.ruff]

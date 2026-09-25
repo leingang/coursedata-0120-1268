@@ -45,7 +45,9 @@ members = ["generic"]
 
 [tool.uv.sources]
 coursedata = { workspace = true }
-
+# To test local edubag changes before pushing to github.com/nyumathclinic/python-edubag, add:
+# python-edubag = { path = "/Users/matthew/Library/CloudStorage/Box-Box/github/python-edubag", editable = true }
+# Remove it again (and rerun `uv sync`) once verified and pushed upstream.
 
 [tool.ruff]
 line-length = 99
@@ -146,4 +148,5 @@ dataset = [
 # Configure which steps run for `python -m coursedata.tasks daily`
 tasks = [
   "sync-gradescope-rosters",
+  "post-gradescope-grades",
 ]

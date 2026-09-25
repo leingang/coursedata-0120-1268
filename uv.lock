@@ -1657,7 +1657,7 @@ wheels = [
 [[package]]
 name = "python-edubag"
 version = "0.1.0"
-source = { git = "https://github.com/nyumathclinic/python-edubag.git?rev=main#10bb7df58142bfa3c8299709979a63bf65ef0dee" }
+source = { git = "https://github.com/nyumathclinic/python-edubag.git?rev=main#01243854d73146c7f0b8922bda813e41f942cd4b" }
 dependencies = [
     { name = "bs4" },
     { name = "html5lib" },

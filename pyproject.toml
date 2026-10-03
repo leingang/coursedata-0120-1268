@@ -89,6 +89,9 @@ courses = ["1352536"]
 [tool.coursedata.edstem]
 courses= ["101563"]
 
+[tool.coursedata.polleverywhere]
+courses= ["62687"]
+
 [tool.coursedata.drive]
 # Optional paths for OAuth installed-app flow. If unset, the downloader first
 # tries application default credentials.
@@ -149,4 +152,5 @@ dataset = [
 tasks = [
   "sync-gradescope-rosters",
   "post-gradescope-grades",
+  "sync-polleverywhere-assignments",
 ]

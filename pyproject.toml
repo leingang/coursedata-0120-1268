@@ -76,6 +76,10 @@ term_number="1268"
 subject = "MATH-UA"
 catalog_number = "120"
 
+# Class numbers to fetch HTML photo rosters for (converted to JSON + Anki decks).
+# Only the latest copy is kept, in data/{raw,processed}/albert/rosters/latest/<class number>.
+photo_rosters = ["10433"]
+
 # course ID's of all Brightspace sites (six-digit number, quoted as a string)
 [tool.coursedata.brightspace]
 courses = ["609453"]
@@ -134,11 +138,13 @@ waitlist_capacity = ["wait_list_capacity"]
 # Configure which steps run for `python -m coursedata.dataset daily`
 dataset = [
   "get.albert",
+  "get.albert-photo-rosters",
 #  "get.brightspace",
 #  "get.drive",
   "get.gradescope",
 #  "get.edstem",
   "process.enrollment",
+  "process.photo-rosters",
   "process.gmail-filters",
 #  "process.engagement",
 #  "process.midterm-progress",

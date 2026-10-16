@@ -96,6 +96,11 @@ courses= ["101563"]
 [tool.coursedata.polleverywhere]
 courses= ["62687"]
 
+[tool.coursedata.artifacts]
+# Exam serials are all digits; this keeps the testing center's own Code39 barcodes
+# (e.g. "E82941240129493") from ever being taken for exam serials.
+serial_pattern = '\d+'
+
 [tool.coursedata.drive]
 # Optional paths for OAuth installed-app flow. If unset, the downloader first
 # tries application default credentials.

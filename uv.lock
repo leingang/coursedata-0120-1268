@@ -350,6 +350,7 @@ dependencies = [
     { name = "pytest" },
     { name = "python-dotenv" },
     { name = "python-edubag" },
+    { name = "pyyaml" },
     { name = "reportlab" },
     { name = "ruff" },
     { name = "scikit-learn" },
@@ -376,6 +377,7 @@ requires-dist = [
     { name = "pytest" },
     { name = "python-dotenv" },
     { name = "python-edubag", git = "https://github.com/nyumathclinic/python-edubag.git?rev=main" },
+    { name = "pyyaml" },
     { name = "reportlab" },
     { name = "ruff" },
     { name = "scikit-learn" },
@@ -1745,7 +1747,7 @@ wheels = [
 [[package]]
 name = "python-edubag"
 version = "0.1.0"
-source = { git = "https://github.com/nyumathclinic/python-edubag.git?rev=main#cf6419ce39286e23629742cb53b4755e39470bd7" }
+source = { git = "https://github.com/nyumathclinic/python-edubag.git?rev=main#a533c03303e61a078e43decaa9954ce258b5c453" }
 dependencies = [
     { name = "bs4" },
     { name = "genanki" },

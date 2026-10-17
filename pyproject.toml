@@ -84,10 +84,35 @@ photo_rosters = ["10433"]
 [tool.coursedata.brightspace]
 courses = ["609453"]
 
-# course ID's of all Brightspace sites (seven-digit number, quoted as a string)
+# course ID's of all Gradescope sites (seven-digit number, quoted as a string)
 # keep in increasing order of section number
 [tool.coursedata.gradescope]
 courses = ["1352536"]
+
+# Grading dashboards for multi-part, multi-version exams; see
+# generic/coursedata/dataset/gradescope/grading.py. `python -m coursedata.dataset watch
+# gradescope-grading ch5-6` keeps a live dashboard under data/processed/gradescope/grading/.
+[tool.coursedata.gradescope.grading.mt1]
+title = "Midterm I"
+course = "1352536"
+roster = "MATH-UA_120.016_*_roster.csv"
+deadline = "2026-10-21T11:59"   # flags problems projected to finish late
+
+[[tool.coursedata.gradescope.grading.mt1.parts]]
+name = "MC"
+containers = ["420366"]   # All editions are in one assignment
+
+[[tool.coursedata.gradescope.grading.mt1.parts]]
+name = "FR"
+containers = ["419614"]
+
+# Who to ping: per problem ("FR.1") or for a whole part ("FR").
+[tool.coursedata.gradescope.grading.mt1.graders]
+"FR.1" = ["Leyla Sozen-Kohl", "Jeffrey Chen Ono"]
+"FR.2" = ["Leyla Sozen-Kohl"]
+"FR.3" = ["Dien-Quan Tran"]
+"MC"   = ["Matthew Leingang", "Gradescope AI"]
+
 
 # course ID's of all EdSTEM sites (five-digit number, quoted as a string)
 [tool.coursedata.edstem]
@@ -162,6 +187,7 @@ dataset = [
 # Configure which steps run for `python -m coursedata.tasks daily`
 tasks = [
   "sync-gradescope-rosters",
+  "sync-gradescope-sections",
   "post-gradescope-grades",
   "sync-polleverywhere-assignments",
 ]

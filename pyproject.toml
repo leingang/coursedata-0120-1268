@@ -109,8 +109,10 @@ containers = ["419614"]
 # Who to ping: per problem ("FR.1") or for a whole part ("FR").
 [tool.coursedata.gradescope.grading.mt1.graders]
 "FR.1" = ["Leyla Sozen-Kohl", "Jeffrey Chen Ono"]
-"FR.2" = ["Leyla Sozen-Kohl"]
-"FR.3" = ["Dien-Quan Tran"]
+"FR.2.1" = ["Leyla Sozen-Kohl"]
+"FR.2.2" = ["Leyla Sozen-Kohl"]
+"FR.3.1" = ["Dien-Quan Tran"]
+"FR.3.2" = ["Dien-Quan Tran"]
 "MC"   = ["Matthew Leingang", "Gradescope AI"]
 
 

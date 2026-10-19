@@ -5,7 +5,7 @@ Snapshot: 2026-10-19
 ## Totals
 - Sections: 5
 - Capacity: 240
-- Lecture Enrolled: 148
+- Lecture Enrolled: 119
 - Waitlist: 0
 - Waitlist Capacity: 40
 

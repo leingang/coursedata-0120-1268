@@ -115,6 +115,17 @@ containers = ["419614"]
 "FR.3.2" = ["Dinh-Quan Tran"]
 "MC"   = ["Matthew Leingang", "Gradescope AI"]
 
+# Publish the public dashboard (no student identifiers) to CIMS web hosting, readable only by
+# these NetIDs (NYU single sign-on). `python -m coursedata.dataset publish gradescope-grading`;
+# `watch gradescope-grading` publishes after each refresh.
+[tool.coursedata.gradescope.grading.publish]
+host = "access.cims.nyu.edu"
+user = "mpl5"
+remote_dir = "/web/mpl5/grading"
+url = "https://cims.nyu.edu/~mpl5/grading"
+viewers = ["mpl5", "ls5447", "dt2872", "jo2317"]   # add the graders' NetIDs
+
+
 
 # course ID's of all EdSTEM sites (five-digit number, quoted as a string)
 [tool.coursedata.edstem]

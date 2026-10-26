@@ -21,6 +21,7 @@ SYNC_DIR = /Users/matthew/Library/CloudStorage/GoogleDrive-mpl5@nyu.edu/My Drive
 .PHONY: requirements
 requirements:
 	uv sync
+	uv run nbstripout --install --attributes .gitattributes
 	
 
 

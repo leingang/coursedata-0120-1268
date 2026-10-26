@@ -355,6 +355,7 @@ dependencies = [
     { name = "ruff" },
     { name = "scikit-learn" },
     { name = "scipy" },
+    { name = "tqdm" },
     { name = "zxing-cpp" },
 ]
 
@@ -382,6 +383,7 @@ requires-dist = [
     { name = "ruff" },
     { name = "scikit-learn" },
     { name = "scipy" },
+    { name = "tqdm" },
     { name = "zxing-cpp" },
 ]
 

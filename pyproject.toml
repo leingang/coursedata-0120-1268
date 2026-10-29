@@ -85,6 +85,12 @@ photo_rosters = ["10433"]
 [tool.coursedata.brightspace]
 courses = ["609453"]
 
+# Quiz reports for `python -m coursedata.dataset get brightspace quizzes`, saved to
+# data/raw/brightspace/quizzes/<course>. Both keys are optional.
+# [tool.coursedata.brightspace.quizzes]
+# courses = ["609453"]                               # default: all brightspace courses
+# reports = ["Question Details", "User Attempts"]    # report names or types; default: all
+
 # course ID's of all Gradescope sites (seven-digit number, quoted as a string)
 # keep in increasing order of section number
 [tool.coursedata.gradescope]

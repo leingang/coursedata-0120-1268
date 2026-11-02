@@ -113,6 +113,36 @@ containers = ["420366"]   # All editions are in one assignment
 name = "FR"
 containers = ["419614"]
 
+[tool.coursedata.gradescope.grading.mt1.templates]
+E = "mt1-M"
+Makeup = "mt1-M"
+
+# Homework problems practicing the same skill as an exam item (version A's numbering; the
+# notebook aligns the other versions). Gradescope outlines are whole problems, so each entry is
+# the problem's total score even where only one part matches.
+[tool.coursedata.gradescope.grading.mt1.homework]
+Q1 = { assignment = "8652128", question = "1" }     # definition of even <-> HW1.1 definitions ("odd" vs "not even")
+Q2 = { assignment = "8652130", question = "2" }     # power set <-> HW3.2 describing subsets of 2^Z
+Q3 = { assignment = "8652128", question = "3" }     # negating a quantified sentence <-> HW1.3
+Q4 = { assignment = "8652134", question = "1" }     # MATTHEW arrangements <-> HW5.1(a) MISSISSIPPI anagrams
+Q5 = { assignment = "8652130", question = "1" }     # inclusion-exclusion <-> HW3.1(a)(iii)
+Q26 = { assignment = "8652129", question = "2" }    # n^2 - n + 41 sometimes prime <-> HW2.2 counterexamples
+Q29 = { assignment = "8652130", question = "1" }    # multiplication principle <-> HW3.1(b)(i)
+Q30a = { assignment = "8652129", question = "4" }   # divisibility iff <-> HW2.4(b)
+Q30b = { assignment = "8652129", question = "2" }   # divisibility counterexample <-> HW2.2(d), (e)
+Q31a = [                                            # prove a set identity
+    { assignment = "8652130", question = "3" },     # HW3.3(b) De Morgan for sets
+    { assignment = "8652130", question = "4" },     # HW3.4(a)
+]
+Q31b = { assignment = "8652130", question = "3" }   # disprove a set identity <-> HW3.3(a) counterexample
+
+# Short names for the homework assignments above, for the notebook's labels
+[tool.coursedata.gradescope.grading.mt1.homework_names]
+"8652128" = "HW1"
+"8652129" = "HW2"
+"8652130" = "HW3"
+"8652134" = "HW5"
+
 # Who to ping: per problem ("FR.1") or for a whole part ("FR").
 [tool.coursedata.gradescope.grading.mt1.graders]
 "FR.1" = ["Leyla Sozen-Kohl", "Jeffrey Chen Ono"]
@@ -132,6 +162,45 @@ remote_dir = "/web/mpl5/grading"
 url = "https://cims.nyu.edu/~mpl5/grading"
 viewers = ["mpl5", "ls5447", "dt2872", "jo2317"]   # add the graders' NetIDs
 
+
+# Midterm progress report: `python -m coursedata.dataset process midterm-progress` writes
+# data/processed/progress/midterm/<date>/, one CSV overall and one per lecture section.
+[tool.coursedata.progress_report]
+output_path = "progress/midterm/{date}/midterm_progress_report.csv"
+# Classification thresholds on 0-1 normalized overall score
+strong_threshold = 0.85
+satisfactory_threshold = 0.65
+min_component_for_strong = 0.70
+concerns_below_any = 0.40
+midterm_label = "Midterm I"
+
+# Syllabus weights to date (participation 10, problem sets 10, quizzes 10, Midterm I 20),
+# normalized; participation is split between attendance/polls and pre-class work.
+[tool.coursedata.progress_report.weights]
+attendance_participation = 0.10
+preclass_assignments = 0.10
+problem_sets = 0.20
+quizzes = 0.20
+midterm_i = 0.40
+
+# Brightspace gradebook category names ("Category:<Name>" in the export headers)
+[tool.coursedata.progress_report.categories]
+pre_quizzes = "Participation Data - Pre-Quizzes"
+pre_surveys = "Participation Data - Pre-Surveys"
+polls = "Participation Data - PollEverywhere"
+problem_sets = "Problem Sets"
+quizzes = "Recitation Quizzes"
+midterm = "Midterm I"
+
+[tool.coursedata.progress_report.data_sources.gradebook]
+type = "brightspace_gradebook"
+path = "brightspace/gradebooks"
+
+[tool.coursedata.progress_report.data_sources.attendance]
+type = "attendance"
+path = "brightspace/attendance"
+stem_contains = "Recitation"
+exclude_sessions = ["October 30"]   # 017/018 bulk-marked absent; 019/020 not entered
 
 
 # course ID's of all EdSTEM sites (five-digit number, quoted as a string)

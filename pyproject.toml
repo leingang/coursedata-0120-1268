@@ -163,6 +163,45 @@ url = "https://cims.nyu.edu/~mpl5/grading"
 viewers = ["mpl5", "ls5447", "dt2872", "jo2317"]   # add the graders' NetIDs
 
 
+# Midterm progress report: `python -m coursedata.dataset process midterm-progress` writes
+# data/processed/progress/midterm/<date>/, one CSV overall and one per lecture section.
+[tool.coursedata.progress_report]
+output_path = "progress/midterm/{date}/midterm_progress_report.csv"
+# Classification thresholds on 0-1 normalized overall score
+strong_threshold = 0.85
+satisfactory_threshold = 0.65
+min_component_for_strong = 0.70
+concerns_below_any = 0.40
+midterm_label = "Midterm I"
+
+# Syllabus weights to date (participation 10, problem sets 10, quizzes 10, Midterm I 20),
+# normalized; participation is split between attendance/polls and pre-class work.
+[tool.coursedata.progress_report.weights]
+attendance_participation = 0.10
+preclass_assignments = 0.10
+problem_sets = 0.20
+quizzes = 0.20
+midterm_i = 0.40
+
+# Brightspace gradebook category names ("Category:<Name>" in the export headers)
+[tool.coursedata.progress_report.categories]
+pre_quizzes = "Participation Data - Pre-Quizzes"
+pre_surveys = "Participation Data - Pre-Surveys"
+polls = "Participation Data - PollEverywhere"
+problem_sets = "Problem Sets"
+quizzes = "Recitation Quizzes"
+midterm = "Midterm I"
+
+[tool.coursedata.progress_report.data_sources.gradebook]
+type = "brightspace_gradebook"
+path = "brightspace/gradebooks"
+
+[tool.coursedata.progress_report.data_sources.attendance]
+type = "attendance"
+path = "brightspace/attendance"
+stem_contains = "Recitation"
+exclude_sessions = ["October 30"]   # 017/018 bulk-marked absent; 019/020 not entered
+
 
 # course ID's of all EdSTEM sites (five-digit number, quoted as a string)
 [tool.coursedata.edstem]

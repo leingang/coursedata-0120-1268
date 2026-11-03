@@ -87,8 +87,8 @@ courses = ["609453"]
 
 # Quiz reports for `python -m coursedata.dataset get brightspace quizzes`, saved to
 # data/raw/brightspace/quizzes/<course>. Both keys are optional.
-# [tool.coursedata.brightspace.quizzes]
-# courses = ["609453"]                               # default: all brightspace courses
+[tool.coursedata.brightspace.quizzes]
+courses = ["609453"]                               # default: all brightspace courses
 # reports = ["Question Details", "User Attempts"]    # report names or types; default: all
 
 # course ID's of all Gradescope sites (seven-digit number, quoted as a string)
@@ -277,6 +277,51 @@ dataset = [
 tasks = [
   "sync-gradescope-rosters",
   "sync-gradescope-sections",
-  "post-gradescope-grades",
-  "sync-polleverywhere-assignments",
 ]
+
+# Weekly schedule for `python -m coursedata.schedule run`, which the
+# local.coursedataschedule LaunchAgent invokes every 5 minutes. An entry runs once
+# on each listed day, at or after `time` (local), within [from, until]; a missed
+# time catches up later the same day. State: data/interim/schedule-state.json.
+# `python -m coursedata.schedule list` shows entries and last runs.
+
+[[tool.coursedata.schedule]]
+name  = "daily-weekly"
+days  = ["Mon"]
+time  = "05:01"
+until = 2026-11-26
+run   = ["make daily"]
+
+[[tool.coursedata.schedule]]
+name  = "daily-finals"
+days  = "daily"
+time  = "05:01"
+from  = 2026-11-27
+until = 2026-12-23
+run   = ["make daily"]
+
+# Quiz reports, five minutes after the pre-quizzes/pre-surveys are due
+[[tool.coursedata.schedule]]
+name  = "quiz-reports"
+days  = ["Tue", "Thu"]
+time  = "12:05"
+until = 2026-12-14
+run   = ["python -m coursedata.dataset get brightspace quizzes --due"]
+
+# Syncs into Brightspace
+[[tool.coursedata.schedule]]
+name  = "brightspace-sync"
+days  = ["Fri"]
+time  = "06:00"
+until = 2026-12-23
+run   = [
+  "python -m coursedata.tasks post-gradescope-grades",
+  "python -m coursedata.tasks sync-polleverywhere-assignments",
+]
+
+# [[tool.coursedata.schedule]]
+# name  = "engagement"
+# days  = ["Fri"]
+# time  = "06:00"
+# until = 2026-12-23
+# run   = ["python -m coursedata.dataset process engagement", "python -m coursedata.dataset report engagement"]

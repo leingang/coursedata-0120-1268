@@ -1763,7 +1763,7 @@ wheels = [
 [[package]]
 name = "python-edubag"
 version = "0.1.0"
-source = { git = "https://github.com/nyumathclinic/python-edubag.git?rev=main#d8d37008290268d8026f8ba6925939f4271b457e" }
+source = { git = "https://github.com/nyumathclinic/python-edubag.git?rev=main#e640509237078c5db115120f9721c871cf8bb43a" }
 dependencies = [
     { name = "bs4" },
     { name = "genanki" },

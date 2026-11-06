@@ -80,6 +80,19 @@ daily:
 	$(GIT) commit -am "Update enrollment reports"
 	$(PYTHON_INTERPRETER) -m coursedata.tasks daily	
 
+## Compute engagement scores from fresh data
+# Poll Everywhere results go to Brightspace first, so the gradebook export
+# includes this week's polls. make stops at the first failing step, so a failed
+# sync or download never produces scores from stale data.
+.PHONY: engagement
+engagement:
+	$(PYTHON_INTERPRETER) -m coursedata.tasks sync-polleverywhere-assignments
+	$(PYTHON_INTERPRETER) -m coursedata.dataset get brightspace gradebooks
+	$(PYTHON_INTERPRETER) -m coursedata.dataset get brightspace attendance
+	$(PYTHON_INTERPRETER) -m coursedata.dataset get edstem analytics
+	$(PYTHON_INTERPRETER) -m coursedata.dataset get drive -r mpl5-office-hours
+	$(PYTHON_INTERPRETER) -m coursedata.dataset process engagement
+
 
 
 #################################################################################

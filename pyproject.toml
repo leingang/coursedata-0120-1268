@@ -17,6 +17,9 @@ classifiers = [
 ]
 dependencies = [
     "coursedata",
+    "google-api-python-client>=2.201.0",
+    "google-auth>=2.62.1",
+    "google-auth-oauthlib>=1.5.0",
     "ipython",
     "jupyterlab",
     "loguru",
@@ -253,6 +256,126 @@ enrolled = ["enrollment_total"]
 waitlist_count = ["wait_list_total"]
 waitlist_capacity = ["wait_list_capacity"]
 
+[tool.coursedata.engagement]
+# Output CSV path; {date} is substituted with today's ISO date (YYYY-MM-DD).
+output_path = "brightspace/grades/{date}/engagement.csv"
+# Directory for validation report / warnings files.
+report_path = "engagement"
+# Set to true to include all per-source columns in the output CSV.
+keep_source_columns = false
+# Set to true to keep only the "engagement" columns in the output CSV.
+keep_only_engagement_columns = true
+
+# ----- Data sources --------------------------------------------------------
+# Each key is the logical source name used as column prefix in the merged data.
+# Set path to a directory and the newest dated subdirectory + file is auto-
+# selected at runtime.
+
+[tool.coursedata.engagement.data_sources.gradebook]
+type          = "brightspace_gradebook"
+path          = "brightspace/gradebooks"
+stem_contains = "120.016"
+# Category names must match the "Category:<Name>" header groups in the export.
+categories = [
+  "Participation Data - Pre-Quizzes",
+  "Participation Data - Pre-Surveys",
+  "Participation Data - PollEverywhere",
+]
+# Leave out items not yet due (from numerators and denominators):
+# Pre-Quizzes/Pre-Surveys by their due time in the quiz list, polls by the
+# date that starts their name ("2026-11-03 Polls - Participation").
+quizzes_json = "brightspace/quizzes/609453/quizzes.json"
+title_dates  = true
+
+[tool.coursedata.engagement.data_sources.attendance]
+type          = "attendance"
+path          = "brightspace/attendance"
+stem_contains = "Recitation"
+
+[tool.coursedata.engagement.data_sources.edstem]
+type          = "edstem_analytics"
+path          = "edstem/analytics"
+stem_contains = "120.016"
+
+[tool.coursedata.engagement.data_sources.office_hours]
+type          = "office_hours_html"
+path          = "drive"
+stem_contains = "mpl5-office-hours"
+
+# ----- Output columns -------------------------------------------------------
+# Denominator column names are auto-generated as:
+#   {source}_{sanitized_category}_denominator  for each gradebook category
+#   {source}_denominator                        for each attendance source
+# where "sanitized" means every non-alphanumeric character becomes "_"
+# (so "Participation Data - Pre-Quizzes" → "Participation_Data___Pre_Quizzes").
+# Numerator terms with spaces/hyphens are automatically backtick-quoted.
+
+[[tool.coursedata.engagement.columns]]
+name        = "Pre-Quiz Completion Rate Points Grade"
+numerator   = ["Participation Data - Pre-Quizzes_positive"]
+denominator = "gradebook_Participation_Data___Pre_Quizzes_denominator"
+scale       = 100.0
+max_cap     = 100.0
+
+[[tool.coursedata.engagement.columns]]
+name        = "Pre-Survey Completion Rate Points Grade"
+numerator   = ["Participation Data - Pre-Surveys_positive"]
+denominator = "gradebook_Participation_Data___Pre_Surveys_denominator"
+scale       = 100.0
+max_cap     = 100.0
+
+[[tool.coursedata.engagement.columns]]
+name        = "Poll Participation Rate Points Grade"
+numerator   = ["Participation Data - PollEverywhere_positive"]
+denominator = "gradebook_Participation_Data___PollEverywhere_denominator"
+scale       = 100.0
+max_cap     = 100.0
+
+[[tool.coursedata.engagement.columns]]
+name        = "Recitation Attendance Points Grade"
+numerator   = ["P"]
+denominator = "attendance_denominator"
+scale       = 100.0
+max_cap     = 100.0
+
+[[tool.coursedata.engagement.columns]]
+name        = "EdSTEM Activity Points Grade"
+numerator   = ["Posts", "2*Answers", "Hearts", "Questions"]
+denominator = "1"
+
+[[tool.coursedata.engagement.columns]]
+name        = "Office Hour Visits Points Grade"
+numerator   = ["visit_count"]
+denominator = "1"
+
+[[tool.coursedata.engagement.columns]]
+name = "Participation Raw Score Points Grade"
+numerator = [
+  "Participation Data - Pre-Quizzes_positive",
+  "Participation Data - Pre-Surveys_positive",
+  "Participation Data - PollEverywhere_positive",
+  "P",
+  "Posts",
+  "2*Answers",
+  "Hearts",
+  "visit_count",
+]
+denominator = "gradebook_Participation_Data___Pre_Quizzes_denominator + gradebook_Participation_Data___Pre_Surveys_denominator + gradebook_Participation_Data___PollEverywhere_denominator + attendance_denominator + 3"
+scale   = 100.0
+max_cap = 100.0
+
+[[tool.coursedata.engagement.columns]]
+name           = "Participation Adjusted Score Points Grade"
+piecewise_base = "Participation Raw Score Points Grade"
+# Piecewise linear mapping with breakpoints (0,0)→(20,20)→(80,100)→(100,100).
+piecewise = [
+  { condition = "<= 20",         formula = "x" },
+  { condition = "> 20 and < 80", formula = "20 + (x - 20) * (4/3)" },
+  { condition = ">= 80",         formula = "100" },
+]
+scale   = 1.0
+max_cap = 100.0
+
 [tool.coursedata.daily]
 # Configure which steps run for `python -m coursedata.dataset daily`
 dataset = [
@@ -314,14 +437,15 @@ name  = "brightspace-sync"
 days  = ["Fri"]
 time  = "06:00"
 until = 2026-12-23
-run   = [
-  "python -m coursedata.tasks post-gradescope-grades",
-  "python -m coursedata.tasks sync-polleverywhere-assignments",
-]
+# (The Poll Everywhere sync runs in `make engagement`, right before the
+# gradebook download, so engagement never uses stale polls.)
+run   = ["python -m coursedata.tasks post-gradescope-grades"]
 
-# [[tool.coursedata.schedule]]
-# name  = "engagement"
-# days  = ["Fri"]
-# time  = "06:00"
-# until = 2026-12-23
-# run   = ["python -m coursedata.dataset process engagement", "python -m coursedata.dataset report engagement"]
+# Engagement scores: Poll Everywhere → Brightspace sync, fresh downloads, then
+# compute (see the Makefile `engagement` target; it stops at the first failure).
+[[tool.coursedata.schedule]]
+name  = "engagement"
+days  = ["Fri"]
+time  = "06:00"
+until = 2026-12-23
+run   = ["make engagement"]

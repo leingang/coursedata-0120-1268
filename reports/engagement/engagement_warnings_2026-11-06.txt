@@ -1,0 +1,4 @@
+EdSTEM Activity Points Grade: 91.4% of students have zero points
+Office Hour Visits Points Grade: 82.8% of students have zero points
+EdSTEM Activity Points Grade: 91.4% zeros (threshold: 50%)
+Office Hour Visits Points Grade: 82.8% zeros (threshold: 50%)

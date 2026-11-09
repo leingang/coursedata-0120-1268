@@ -473,6 +473,15 @@ time  = "12:05"
 until = 2026-12-14
 run   = ["python -m coursedata.dataset get brightspace quizzes --due"]
 
+# Testing-center exam scans (every exam whose window is open; see [tool.coursedata.aim]).
+# `until` covers the final: 2026-12-17 + grace_days 8 + fetch_days 7.
+[[tool.coursedata.schedule]]
+name  = "aim-exams"
+days  = "daily"
+time  = "07:00"
+until = 2027-01-01
+run   = ["python -m coursedata.dataset get aim"]
+
 # Syncs into Brightspace
 [[tool.coursedata.schedule]]
 name  = "brightspace-sync"

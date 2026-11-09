@@ -255,7 +255,7 @@ date  = 2026-12-11
 
 [tool.coursedata.aim.exams.final]
 crn   = ["10433"]
-type  = ["Exam"]
+type  = ["Final"]
 date  = 2026-12-17
 grace_days = 8
 

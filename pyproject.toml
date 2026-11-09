@@ -218,6 +218,48 @@ courses= ["62687"]
 # (e.g. "E82941240129493") from ever being taken for exam serials.
 serial_pattern = '\d+'
 
+# Testing-center (Moses Center) exam scans from the AIM instructor portal; see
+# generic/coursedata/dataset/aim.py. `python -m coursedata.dataset get aim ch7 [--list]` saves new
+# scans to data/raw/artifacts/ch7/ for `process artifacts`; `get aim` alone does every exam
+# still active (date .. last date + fetch_days, default 7). Rows match on all keys given.
+[tool.coursedata.aim.exams.mt2]
+crn   = ["10433"]   # 016; may be dropped once [tool.coursedata.albert].courses exists
+type  = ["Exam"]
+date  = 2026-11-10
+grace_days = 8
+
+[tool.coursedata.aim.exams.q07]
+crn   = ["10433"]   
+type  = ["Quiz"]
+date  = 2026-11-06
+
+[tool.coursedata.aim.exams.q08]
+crn   = ["10433"]
+type  = ["Quiz"]
+date  = 2026-11-13
+
+[tool.coursedata.aim.exams.q09]
+crn   = ["10433"]
+type  = ["Quiz"]
+date  = 2026-11-20
+
+[tool.coursedata.aim.exams.q10]
+crn   = ["10433"]
+type  = ["Quiz"]
+date  = 2026-12-04
+
+[tool.coursedata.aim.exams.q11]
+crn   = ["10433"]
+type  = ["Quiz"]
+date  = 2026-12-11
+
+[tool.coursedata.aim.exams.final]
+crn   = ["10433"]
+type  = ["Exam"]
+date  = 2026-12-17
+grace_days = 8
+
+
 [tool.coursedata.drive]
 # Optional paths for OAuth installed-app flow. If unset, the downloader first
 # tries application default credentials.

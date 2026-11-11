@@ -217,6 +217,8 @@ courses= ["62687"]
 # Exam serials are all digits; this keeps the testing center's own Code39 barcodes
 # (e.g. "E82941240129493") from ever being taken for exam serials.
 serial_pattern = '\d+'
+# The bubblesheet from Midterm II on labels its ID box "NetID" (Midterm I's said "ID").
+bubblesheet_labels = { name = "Name", id = "NetID" }
 
 # Testing-center (Moses Center) exam scans from the AIM instructor portal; see
 # generic/coursedata/dataset/aim.py. `python -m coursedata.dataset get aim ch7 [--list]` saves new

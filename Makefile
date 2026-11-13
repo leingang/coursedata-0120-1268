@@ -92,6 +92,7 @@ engagement:
 	$(PYTHON_INTERPRETER) -m coursedata.dataset get edstem analytics
 	$(PYTHON_INTERPRETER) -m coursedata.dataset get drive -r mpl5-office-hours
 	$(PYTHON_INTERPRETER) -m coursedata.dataset process engagement
+	$(PYTHON_INTERPRETER) -m coursedata.tasks upload-engagement
 
 
 

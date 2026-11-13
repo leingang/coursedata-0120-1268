@@ -332,6 +332,17 @@ keep_source_columns = false
 # Set to true to keep only the "engagement" columns in the output CSV.
 keep_only_engagement_columns = true
 
+# `python -m coursedata.tasks upload-engagement` (last step of `make engagement`):
+# imports the newest engagement CSV into this Brightspace course, then ends each
+# grade item's description with a stamp paragraph. {updated} is the time the
+# scores were computed for; the stamp must start with `marker`, which is how the
+# previous week's stamp is found and replaced. The rest of each description is kept.
+[tool.coursedata.engagement.upload]
+course        = "609453"
+marker        = "Last updated"
+stamp         = "<p><em>Last updated {updated:%a %b %-d, %Y, %-I:%M %p}. This score is recalculated weekly from the data available then; it is not live.</em></p>"
+max_age_hours = 24      # don't upload scores older than this
+
 # ----- Data sources --------------------------------------------------------
 # Each key is the logical source name used as column prefix in the merged data.
 # Set path to a directory and the newest dated subdirectory + file is auto-
